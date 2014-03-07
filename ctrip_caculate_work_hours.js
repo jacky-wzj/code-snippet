@@ -1,10 +1,12 @@
+javascrpt:
 //inject jQuery
 (function(){
-    if(typeof jQuery === 'undefined'){                
+	//force load jQuery always
+    // if(typeof jQuery === 'undefined'){                
         var script = document.createElement("script");
         script.src = "http://libs.baidu.com/jquery/1.9.0/jquery.min.js"; //using baidu cdn. maybe using self cdn        
         document.getElementsByTagName('head')[0].appendChild(script);
-    }
+    // }
 })();
 
 function caculateWorkHours(){
@@ -81,8 +83,9 @@ function caculateWorkHours(){
     })();
 };
 
-if(typeof jQuery === 'undefined'){                
+//force wait 5 secords for load correct version jquery
+//if(typeof jQuery === 'undefined'){                
      setTimeout( caculateWorkHours , 5000);
-}else{
-     caculateWorkHours();
-}
+//}else{
+//    caculateWorkHours();
+//}
