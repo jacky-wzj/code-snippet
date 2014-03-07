@@ -80,7 +80,7 @@ function caculateWorkHours(){
         var temp = caculateWorkHoursAndWorkDays();
         var workHorus = "当月你工作了 " + temp.workHours + " 小时。";
         var workDays = "当月你工作了 " + temp.workDays +  "天。"
-        var averageHours = "当月你每天的工时为：" + temp.workHours/temp.workDays;
+        var averageHours = "当月你每天的工时为：" + ((temp.workHours/temp.workDays) - 1 );
         alert(workHorus + "\n" + workDays + "\n" + averageHours);        
     })();
 };
