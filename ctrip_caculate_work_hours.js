@@ -84,8 +84,9 @@ function caculateWorkHours(){
 };
 
 //force wait 5 secords for load correct version jquery
-//if(typeof jQuery === 'undefined'){                
-     setTimeout( caculateWorkHours , 5000);
+//if(typeof jQuery === 'undefined'){    
+		alert('开始计算，智商低请稍等。。。。。。');
+		setTimeout( caculateWorkHours , 5000);	
 //}else{
 //    caculateWorkHours();
 //}
