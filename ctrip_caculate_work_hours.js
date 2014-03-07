@@ -1,12 +1,10 @@
-javascrpt:
 //inject jQuery
 (function(){
-	//force load jQuery always
-    // if(typeof jQuery === 'undefined'){                
+    if(typeof jQuery === 'undefined'){                
         var script = document.createElement("script");
         script.src = "http://libs.baidu.com/jquery/1.9.0/jquery.min.js"; //using baidu cdn. maybe using self cdn        
         document.getElementsByTagName('head')[0].appendChild(script);
-    // }
+    }
 })();
 
 function caculateWorkHours(){
@@ -41,14 +39,18 @@ function caculateWorkHours(){
             var item = temp[i];
             var text = item.innerText;
             var html = item.innerHTML;
-            if(text.indexOf('~')>0 && html.indexOf('table')<0)
-                target.push(text);  
+            if(text.indexOf('~')>0 && html.indexOf('table')<0 && text.length === 11){
+               target.push(text);  
+           	}
         }
 		var totalWorkMinutes = 0;
-		target.forEach(function(x){
-			totalWorkMinutes += caculateTimeSpan(x);
-		});
 
+		// target.forEach(function(x){
+		// 	totalWorkMinutes += caculateTimeSpan(x);
+		// });
+		jQuery.each(target, function(index, x){
+		  	totalWorkMinutes += caculateTimeSpan(x);
+		});
 		function caculateTimeSpan(cardTimePair){
 			var startTimeAndEndTimePair = cardTimePair.split('~'); //TODO: Check reuslt array length equal 2
 			var startDateTime = buildDateTime(startTimeAndEndTimePair[0]);
@@ -83,10 +85,9 @@ function caculateWorkHours(){
     })();
 };
 
-//force wait 5 secords for load correct version jquery
-//if(typeof jQuery === 'undefined'){    
-		alert('开始计算，智商低请稍等。。。。。。');
+alert('开始计算，智商低请稍等。。。。。。');
+if(typeof jQuery === 'undefined'){    
 		setTimeout( caculateWorkHours , 5000);	
-//}else{
-//    caculateWorkHours();
-//}
+}else{
+   caculateWorkHours();
+}
