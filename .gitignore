@@ -1,1 +1,6 @@
+<<<<<<< HEAD
 node_modules
+=======
+# shortcut file
+*.lnk
+>>>>>>> 50652474786476f4c75aee947b3ccd211c79ea1a
