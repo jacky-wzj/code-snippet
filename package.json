@@ -1,0 +1,12 @@
+{
+    "dependencies": {
+    	"request": "2.33.0",
+        "MD5": "1.2.0",
+        "restler": "3.2.0",
+        "cookie-jar": "0.3.0",
+        "iconv-lite": "0.2.11",
+        "bufferhelper": "0.2.0",
+        "deflate-js": "0.2.3",
+        "html-entities": "1.0.10"
+    }
+}
