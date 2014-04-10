@@ -2,6 +2,7 @@
         Get Resource with collapsed
     */
 
+    // base class , that define self collapse or child collapse
     [Serializable]
     [DataContract]
     public class CollapsedBase
@@ -26,6 +27,50 @@
     }
 
 
+    // final class, that define which part collapse (the collapsed resoure must using same name wiht origin porperty)
+    [Serializable]
+    [DataContract]
+    public class VacationProductCollapsed : CollapsedBase
+    {
+        public VacationProductCollapsed()
+        {
+            VProductArrivedRelInfos = new VProductArrivedRelInfosCollapsed();
+            VProductDepartureRelInfos = new VProductDepartureRelInfosCollapsed();
+            ProductBasicInfos = new ProductBasicInfosCollapsed();
+        }
+        [DataMember]
+        public VProductArrivedRelInfosCollapsed VProductArrivedRelInfos { get; set; }
+        [DataMember]
+        public VProductDepartureRelInfosCollapsed VProductDepartureRelInfos { get; set; }
+        [DataMember]
+        public ProductBasicInfosCollapsed ProductBasicInfos { get; set; }
+    }
+
+    [Serializable]
+    [DataContract]
+    public class VProductArrivedRelInfosCollapsed : CollapsedBase { }
+
+    [Serializable]
+    [DataContract]
+    public class VProductDepartureRelInfosCollapsed : CollapsedBase { }
+
+    [Serializable]
+    [DataContract]
+    public class ProductBasicInfosCollapsed : CollapsedBase
+    {
+        public ProductBasicInfosCollapsed()
+        {
+            ProductTourDailyInfos = new ProductTourDailyInfosCollapsed();
+        }
+        [DataMember]
+        public ProductTourDailyInfosCollapsed ProductTourDailyInfos { get; set; }
+    }
+
+    [Serializable]
+    [DataContract]
+    public class ProductTourDailyInfosCollapsed : CollapsedBase { }
+
+    //collapse help 
     public static class CollapseResourceHelper
     {
         private const string SelfCollapsed = "SelfCollapsed";
@@ -159,3 +204,6 @@
             return result;
         }
     }
+
+    //use the collapse
+    CollapseResourceHelper.Collapse(ref item, resourceCollapsed);
