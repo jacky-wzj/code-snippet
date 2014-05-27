@@ -6,89 +6,167 @@
   <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
   <meta meta="utf-8">
   <style>
-    html, body, #map-canvas {
-      height: 100%;
-      margin: 0px;
-      padding: 0px;
-    }
+  #map-canvas {
+    /*height: 800px; 
+    width: 800px;*/
+    /*height: 100%;
+    margin: 0px;
+    padding: 0px;*/
+  }
   </style>
   <script src="./google-map-api-v3.js"></script>
-  <script>
-
-    function initialize(){
-      var mapOptions = {
-          zoom:21,
-          // center: new google.maps.LatLng(1.338384,103.757698),
-          mapTypeId : google.maps.MapTypeId.SATELLITE
-      };
-      var map = new google.maps.Map(document.getElementById('map-canvas'),mapOptions);
-
-      var northEast  = new google.maps.LatLng(1.325858,103.743429);
-      var southWest = new google.maps.LatLng(1.326939,103.740737);
-      var bounds = new google.maps.LatLngBounds(southWest,northEast);
-      map.fitBounds(bounds);
-
-      var marker = new google.maps.Marker({
-        position : new google.maps.LatLng(1.325858,103.743429),
-        map: map,
-        title: 'Green'
-      });
-
-      var marker = new google.maps.Marker({
-        position : new google.maps.LatLng(1.326939,103.740737),
-        map: map,
-        title: 'Tee'
-      });
-
-      // google.maps.event.addListener(map, 'click', function(e){
-      //   var position = e.latLng;
-      //   var marker = new google.maps.Marker({
-      //     position: position,
-      //     map: map
-      //   });
-      //   map.panTo(position);
-      // });
-      // google.maps.event.addListener(map, 'center_changed',function(){
-      //   window.setTimeout(function(){
-      //     map.panTo(marker.getPosition());
-      //   },3000)
-      // });
-      // google.maps.event.addListener(marker,'click', function(){
-      //   map.setZoom(9);
-      //   map.setCenter(marker.getPosition());
-      // });
-
-      // var lngSpan = northEast.lng() - southWest.lng();
-      // var latSpan = northEast.lat() - southWest.lat();
-      // for(var i = 0; i < 5; i++){
-      //   var position = new google.maps.LatLng(
-      //   southWest.lat() + latSpan * Math.random(),
-      //   southWest.lng() + lngSpan * Math.random());
-      //   var marker = new google.maps.Marker({
-      //     position: position,
-      //     map: map
-      //   });
-
-      //   marker.setTitle((i + 1).toString());
-      //   attachSecretMessage(marker, i);
-      // }
-    }
-    // The five markers show a secret message when clicked
-    // but that message is not within the marker's instance data
-    // function attachSecretMessage(marker, num) {
-    //   var message = ['This', 'is', 'the', 'secret', 'message'];
-    //   var infowindow = new google.maps.InfoWindow({
-    //     content: message[num]
-    //   });
-
-    //   google.maps.event.addListener(marker, 'click', function() {
-    //     infowindow.open(marker.get('map'), marker);
-    //   });
-    // }
-    google.maps.event.addDomListener(window,'load',initialize);
-  </script>
 </head>
 <body>
-  <div id="map-canvas"></div> 
+  <section >
+    <form action="/#">
+      <fieldset style='float:left;width:50%' >
+        <legend>Green</legend>
+        <label for="green_lat">Lat</label>
+        <input type="text" name='green_lat' id='green_lat'>
+        <label for="green_lng">Lng</label>
+        <input type="text" name='green_lng' id='green_lng'>
+      </fieldset>
+      <fieldset >
+        <legend>Tee</legend>
+        <label for="tee_lat">Lat</label>
+        <input type="text" name='tee_lat' id='tee_lat'>
+        <label for="tee_lng">Lng</label>
+        <input type="text" name='tee_lng' id='tee_lng'>
+      </fieldset>
+      <button id='mapRefresh'>显示图片</button>
+      <button id='demo1'>实例1</button> 
+      <button id = 'demo2'>实例2</button>
+      <button id="demo3">实例3</button>
+      <button id="zoom_in">放大</button>
+      <button id="zoom_out">缩小</button>
+      <button id="snapshot">存图</button>
+    </form>
+    <div>
+      <label for="target_lat">target_lat</label>
+      <input type="text" id="target_lat">
+      <label for="target_lng">target_lng</label>
+      <input type="text" id="target_lng">
+      <label for="mouse_x">mouse_x</label>
+      <input type="text" id="mouse_x">
+      <label for="mouse_y">mouse_y</label>
+      <input type="text" id="mouse_y">
+    </div>      
+  </section>
+  <div id="map-canvas" style="height: 700px; width: 800px;" onclick='mapDivClicked(event);'></div> 
+  <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+  <script>
+  if(1==1 || document.domain.indexOf('jackywzj')>=0)
+  {
+    var map,mLat,mLng;
+    function mapDivClicked (event) {
+      var target = document.getElementById('map-canvas'),
+      posx = event.pageX - target.offsetLeft,
+      posy = event.pageY - target.offsetTop,
+      bounds = map.getBounds(),
+      neLatlng = bounds.getNorthEast(),
+      swLatlng = bounds.getSouthWest(),
+      startLat = neLatlng.lat(),
+      endLng = neLatlng.lng(),
+      endLat = swLatlng.lat(),
+      startLng = swLatlng.lng(),
+      lat = startLat + ((posy/800) * (endLat - startLat)),
+      lng = startLng + ((posx/800) * (endLng - startLng));
+      $('#mouse_x').val(posx);
+      $('#mouse_y').val(posy);
+    }
+    if(new Date().getTime() < new Date(2014,05,28).getTime()){
+      function initialize(){
+        var mapOptions = {
+          zoom:21,
+          mapTypeId : google.maps.MapTypeId.SATELLITE,
+          disableDefaultUI: true
+        };
+        map = new google.maps.Map(document.getElementById('map-canvas'),mapOptions);
+
+        var northEast  = new google.maps.LatLng(1.325858,103.743429);
+        var southWest = new google.maps.LatLng(1.326939,103.740737);
+        var bounds = new google.maps.LatLngBounds(southWest,northEast);
+        map.fitBounds(bounds);
+        var marker_green = new google.maps.Marker({
+          position : new google.maps.LatLng(1.325858,103.743429),
+          animation: google.maps.Animation.BOUNCE,
+          map: map,
+          title: 'Green'
+        });
+        var green_info = new google.maps.InfoWindow({
+          content: 'Green'
+        });
+        green_info.open(map,marker_green);
+        var marker_tee = new google.maps.Marker({
+          position : new google.maps.LatLng(1.326939,103.740737),
+          animation: google.maps.Animation.BOUNCE,
+          map: map,
+          title: 'Tee'
+        });
+        var tee_info = new google.maps.InfoWindow({
+          content : 'Tee'
+        });
+        tee_info.open(map,marker_tee);
+
+        google.maps.event.addListener(map, 'click', function(event) {
+          mLat = event.latLng.lat();
+          mLng = event.latLng.lng();
+          $('#target_lng').val(mLng);
+          $('#target_lat').val(mLat);
+        });
+
+        function RestBounds(tee_lat,tee_lng,green_lat,green_lng){
+          var green  = new google.maps.LatLng(tee_lat,tee_lng);
+          var tee = new google.maps.LatLng(green_lat,green_lng);
+          var bounds = new google.maps.LatLngBounds(green,tee);
+          map.fitBounds(bounds);
+          marker_green.setPosition(green);
+          marker_tee.setPosition(tee);
+          marker_green.setAnimation(google.maps.Animation.BOUNCE);
+        }
+
+        $('#mapRefresh').click(function(){
+          event.preventDefault();
+          var green_lat =  $('#green_lat').val() || '';
+          var green_lng = $('#green_lng').val() || '';
+          var tee_lat = $('#tee_lat').val() || '';
+          var tee_lng = $('#tee_lng').val() || '';
+          if(green_lat == '' || green_lng == '' || tee_lat == '' || tee_lng == ''){
+            alert('请输入坐标点！');
+          }else{
+           RestBounds(tee_lat,tee_lng,green_lat,green_lng) ;
+         }
+       });
+        $('#demo1').click(function(){
+          event.preventDefault();
+          RestBounds(1.326939,103.740737,1.325858,103.743429) ;
+        });
+        $('#demo2').click(function(){
+          event.preventDefault();
+          RestBounds(1.326151,103.743564,1.327357,103.744076) ;
+        });
+        $('#demo3').click(function(){
+          event.preventDefault();
+          RestBounds(1.328384,103.737698,1.3298763783840635,103.74051690101624) ;
+        });
+        $('#zoom_in').click(function(){
+          event.preventDefault(); 
+          map.setZoom(map.getZoom() + 1);
+        });
+        $('#zoom_out').click(function(){
+          event.preventDefault();
+          map.setZoom(map.getZoom() -1);
+        });
+        $('#snapshot').click(function(){
+         event.preventDefault();
+         alert('暂不支持！') ;
+       });
+
+
+      }
+      google.maps.event.addDomListener(window,'load',initialize);
+    }
+  }
+  </script>
 </body>
 </html>

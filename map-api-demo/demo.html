@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Map API Demo</title>
+  <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+  <meta meta="utf-8">
+  <style>
+    html, body, #map-canvas {
+      height: 100%;
+      margin: 0px;
+      padding: 0px;
+    }
+  </style>
+  <script src="./map.js"></script>
+  <script>
+
+    
+    // The five markers show a secret message when clicked
+    // but that message is not within the marker's instance data
+    // function attachSecretMessage(marker, num) {
+    //   var message = ['This', 'is', 'the', 'secret', 'message'];
+    //   var infowindow = new google.maps.InfoWindow({
+    //     content: message[num]
+    //   });
+
+    //   google.maps.event.addListener(marker, 'click', function() {
+    //     infowindow.open(marker.get('map'), marker);
+    //   });
+    // }
+    
+  </script>
+</head>
+<body>
+  <section >
+    <form action="/#">
+      <fieldset style='float:left;width:50%' >
+        <legend>Green</legend>
+        <label for="green_lat">Lat</label>
+        <input type="text" name='green_lat' id='green_lat'>
+        <label for="green_lng">Lng</label>
+        <input type="text" name='green_lng' id='green_lng'>
+      </fieldset>
+      <fieldset >
+        <legend>Tee</legend>
+        <label for="tee_lat">Lat</label>
+        <input type="text" name='tee_lat' id='tee_lat'>
+        <label for="tee_lng">Lng</label>
+        <input type="text" name='tee_lng' id='tee_lng'>
+      </fieldset>
+      <button id='mapRefresh'>显示图片</button>
+      <button id='demo1'>实例1</button> 
+      <button id = 'demo2'>实例2</button>
+      <button id="demo3">实例3</button>
+      <button id="zoom_in">放大</button>
+      <button id="zoom_out">缩小</button>
+      <button id="snapshot">存图</button>
+    </form>
+    <div>
+      <label for="target_lat">target_lat</label>
+      <input type="text" id="target_lat">
+      <label for="target_lng">target_lng</label>
+      <input type="text" id="target_lng">
+      <label for="mouse_x">mouse_x</label>
+      <input type="text" id="mouse_x">
+      <label for="mouse_y">mouse_y</label>
+      <input type="text" id="mouse_y">
+    </div>      
+  </section>
+  <div id="map-canvas" style="height: 700px; width: 800px;" onclick='mapDivClicked(event);'></div>
+  <script src="./jQuery.js"></script>
+  <script src='./demo.js'>
+  </script>
+</body>
+</html>
